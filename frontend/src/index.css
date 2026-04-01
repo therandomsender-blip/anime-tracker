@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0d0d14;
+  --bg-secondary: #12121e;
+  --bg-card: #1a1a2e;
+  --bg-hover: #1f1f35;
+  --border: rgba(255, 107, 157, 0.15);
+  --sakura: #ff6b9d;
+  --sakura-glow: rgba(255, 107, 157, 0.4);
+  --gold: #ffd700;
+  --cyan: #00d4ff;
+  --text-primary: #f0f0f5;
+  --text-muted: #8888aa;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sakura); }
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+@layer components {
+  .card {
+    @apply bg-[#1a1a2e] border border-[rgba(255,107,157,0.15)] rounded-xl;
+  }
+  .btn-primary {
+    @apply bg-[#ff6b9d] hover:bg-[#cc4477] text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 active:scale-95;
+  }
+  .btn-ghost {
+    @apply border border-[rgba(255,107,157,0.3)] hover:border-[#ff6b9d] text-[#f0f0f5] px-5 py-2.5 rounded-lg transition-all duration-200;
+  }
+  .input {
+    @apply bg-[#12121e] border border-[rgba(255,107,157,0.2)] focus:border-[#ff6b9d] text-[#f0f0f5] rounded-lg px-4 py-2.5 w-full outline-none transition-colors placeholder:text-[#8888aa];
+  }
+  .badge {
+    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+  .shimmer {
+    background: linear-gradient(90deg, #1a1a2e 25%, #252540 50%, #1a1a2e 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
