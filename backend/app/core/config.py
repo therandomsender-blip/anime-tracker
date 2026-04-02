@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 
 class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql://user:password@localhost/animetracker"
@@ -7,10 +8,12 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     JIKAN_BASE_URL: str = "https://api.jikan.moe/v4"
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if self.DATABASE_URL.startswith("postgres://"):
-            self.DATABASE_URL = self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def fix_postgres_url(cls, v):
+        if isinstance(v, str) and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
 
     class Config:
         env_file = ".env"
