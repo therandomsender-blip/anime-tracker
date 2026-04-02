@@ -7,6 +7,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     JIKAN_BASE_URL: str = "https://api.jikan.moe/v4"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.DATABASE_URL.startswith("postgres://"):
+            self.DATABASE_URL = self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
     class Config:
         env_file = ".env"
 
