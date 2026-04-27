@@ -9,7 +9,7 @@ app = FastAPI(title="Anime Tracker API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with your Vercel URL in production
+    allow_origins=["https://therandomsender-anivault.vercel.app"],  # Replace with your Vercel URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,3 +22,4 @@ app.include_router(anime.router, prefix="/api/anime", tags=["anime"])
 @app.get("/")
 def root():
     return {"message": "Anime Tracker API is running 🎌"}
+          
