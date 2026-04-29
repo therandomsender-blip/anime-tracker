@@ -10,10 +10,16 @@ app = FastAPI(title="Anime Tracker API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://therandomsender-anivault.vercel.app"],  # Replace with your Vercel URL in production
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+@app.on_event("startup")
+async def startup_event():
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"DB startup warning: {e}")
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(collection.router, prefix="/api/collection", tags=["collection"])
